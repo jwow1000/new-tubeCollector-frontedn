@@ -54,7 +54,7 @@ function Root() {
           <input 
             type="string" 
             name="username"
-            value={data.email} 
+            value={data.username} 
             onChange={handleInputChange}
           />
         </label>
@@ -67,7 +67,7 @@ function Root() {
             onChange={handleInputChange}
           />
         </label>
-        <button>
+        <button type="submit">
           Log IN!
         </button>
       </form>
