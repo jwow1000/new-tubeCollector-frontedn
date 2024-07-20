@@ -30,9 +30,12 @@ export const Login = async (credentials: UserCred) => {
 
 export const signOut = async () => {
   try {
-    localStorage.removeItem("token");
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    delete api.defaults.headers.common['Authorization'];
     return true;
   } catch (error) {
+    console.log("sign out failed");
     throw error;
   }
 };
