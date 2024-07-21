@@ -1,5 +1,6 @@
 // this is for crudding the post
 import api from "./api-config";
+import { Playlist } from "../lib/types";
 
 // get all user's playlists
 export async function getPlaylists() {
@@ -15,3 +16,13 @@ export async function getPlaylist( id: number ) {
 }
 
 // create new playlist
+export async function createPlaylist( cred: Playlist) {
+  const response = await api.post('playlists/create', cred);
+  return response.data;
+}
+
+// add a tube to a playlist
+
+// remove a tube from a playlist
+
+// edit a tube

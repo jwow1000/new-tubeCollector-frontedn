@@ -21,8 +21,11 @@ const handleUtubeURL = (path) => {
 function Playlist() {
   console.log("did playlist even load?")
   const { id } = useParams<IdParams>();
+
   // the playlist info
   const [pList, setPlist] = useState<PListType>();
+  // focused playing tube
+  const [focusTube, setFocusTube] = useState<Tube>();
 
   useEffect( () => {
     const fetchPlaylist = async () => {
@@ -31,16 +34,23 @@ function Playlist() {
         // set the pList
         setPlist( data );
       }
+      console.log(pList?.title)
     } 
 
     fetchPlaylist();
   }, [])
-
-  console.log("loaded playlist", pList);
+  // function to handle when a tube is clicked
+  function handleTubePlay( item: Tube) {
+    console.log("did tube play fire?")
+    setFocusTube( item );
+    console.log("tube info?", item)
+  }
+  
+  // console.log("loaded playlist", pList);
   
   return (
     <div className={styles.root}>
-      <h1 className={styles.title}>{pList?.title}</h1>
+      <h1 className={styles.title}>{pList?.playlist.title}</h1>
       {
         pList?.tubes.map((item, idx) => (
           <div
@@ -51,25 +61,28 @@ function Playlist() {
               'top': `${item.posY * 100}%`
             }}
           > 
-            {/* <img 
+            <img 
               src={ convertVid(item.url) } 
               alt={item.title}
               className={styles.tubePic}
+              onClick={() => {handleTubePlay(item)}}
             >
                 
-            </img> */}
-            <iframe
-              src={ handleUtubeURL(item.url) }
-              title={item.title} 
-              className={styles.video}
-              allowFullScreen="true"
-            >
-  
-            </iframe>
-            {item.title}
-            {item.description}
+            </img>
           </div>
         ))
+      }
+
+      {
+        focusTube &&
+        <iframe
+          src={ handleUtubeURL(focusTube.url) }
+          title={focusTube.title} 
+          className={styles.focusVid}
+        >  
+            
+  
+        </iframe> 
       }
     </div>
   )
