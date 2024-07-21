@@ -26,7 +26,7 @@ api.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       const refreshToken = localStorage.getItem('refresh_token');
-      const response = await axios.post('http://localhost:8000/api/token/refresh/', { refresh: refreshToken });
+      const response = await axios.post('http://localhost:8000/users/token/refresh/', { refresh: refreshToken });
       if (response.status === 200) {
         localStorage.setItem('access_token', response.data.access);
         api.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access;

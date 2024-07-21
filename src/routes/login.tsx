@@ -1,6 +1,7 @@
-import { ChangeEvent, useState } from "react"
+import { useState } from "react"
+import useStore from "../lib/useStore";
 import { useNavigate } from "react-router-dom";
-import { UserCred } from "../lib/types";
+import { UserCred, User } from "../lib/types";
 import { Login as loginUser } from "../services/users"
 
 function Login() {
@@ -12,17 +13,15 @@ function Login() {
     isError: false,
     errorMsg: "",
   } 
-  // define global user type
-  type User = {
-    username: string;
-  };
 
   const initUser: User = {
     username: "",
+    id: "",
   }
 
+  const { setUser } = useStore();
+
   const [ data, setData ] = useState( loginCred );
-  const [ globUser, setGlobUser] = useState( initUser );
 
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
@@ -39,8 +38,8 @@ function Login() {
     try {
       // 
       const userData = await loginUser( data );
-      console.log( "pooppp", userData );
-      setGlobUser( userData );
+      // set the userr using useStore( Zustand )
+      setUser( userData ); 
       // navigate to root
       navigate("/");
 

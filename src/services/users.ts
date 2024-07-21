@@ -1,6 +1,13 @@
 // this is the users services 
 import api from "./api-config.ts";
-import { UserCred } from "../lib/types.ts";
+import { UserCred, User } from "../lib/types.ts";
+
+// types
+interface VerifyUserResponse {
+  access: string;
+  user: User; // Replace `any` with the appropriate user type
+}
+
 
 export const signUp = async (credentials: UserCred) => {
   console.log("sign up credentials", credentials);
@@ -30,9 +37,8 @@ export const Login = async (credentials: UserCred) => {
 
 export const signOut = async () => {
   try {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    delete api.defaults.headers.common['Authorization'];
+    localStorage.removeItem('token');
+    // delete api.defaults.headers.common['Authorization'];
     return true;
   } catch (error) {
     console.log("sign out failed");
@@ -40,16 +46,35 @@ export const signOut = async () => {
   }
 };
 
-export const verifyUser = async () => {
+// export const verifyUser = async () => {
+//   const token = localStorage.getItem("token");
+//   if (token) {
+//     const resp = await api.get("/users/token/refresh/");
+//     localStorage.setItem("token", resp.data.access);
+//     return resp.data.user;
+//   } else {
+//     console.log('NOT VERIFIED')
+//   }
+//   return false;
+// };
+
+export const verifyUser = async (): Promise<User | boolean> => {
   const token = localStorage.getItem("token");
+  console.log("acces token: ", token)
   if (token) {
-    const resp = await api.get("/users/token/refresh/");
-    localStorage.setItem("token", resp.data.access);
-    return resp.data.user;
+    try {
+      // Set the token in the headers
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      const resp = await api.get<User>("/users/token/refresh");
+      return resp.data;
+    } catch(error) {
+      console.log("user vereification failed", error);
+      return false;
+    }
   } else {
-    console.log('NOT VERIFIED')
+    console.log('NOT VERIFIED');
+    return false;
   }
-  return false;
 };
 
 //get profile by user id
