@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { signOut } from "../services/users";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, Outlet } from "react-router-dom";
 import { getPlaylists } from "../services/playlists.ts"
 import { verifyUser } from "../services/users";
 import { User } from "../lib/types.ts";
@@ -82,6 +82,7 @@ function Root() {
           ))
         }
       </div>
+      <Outlet />
     </div>
   )
 }

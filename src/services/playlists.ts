@@ -8,7 +8,8 @@ export async function getPlaylists() {
 }
 
 // get playlist by id
-export async function getPlaylist( id: string ) {
+export async function getPlaylist( id: number ) {
   const response = await api.get(`/playlists/${ id }`);
+  console.log("is get playlist with id working?", response.data)
   return response.data;
 }

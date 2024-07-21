@@ -1,11 +1,13 @@
-import { useLoaderData } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { getPlaylist } from "../services/playlists.ts";
 import { youtube_parser, convertVid } from "../services/imgHandle.ts";
+import { Tube, Playlist as PListType } from "../lib/types.ts";
 import styles from "../ui/pListStyles.module.css"
 
-async function loader({params}) {
-  const data = await getPlaylist(params.id);
-  return data;
+// type definitons
+type IdParams = {
+  id: number | undefined ;
 }
 
 // make an embed from any type of youtube link
@@ -17,16 +19,30 @@ const handleUtubeURL = (path) => {
 }
 
 function Playlist() {
-  const load = useLoaderData();
-  const tubes = load.playlist.tubes;
-  const title = load.playlist.title;
-  console.log("loaded playlist", load.playlist.tubes);
+  console.log("did playlist even load?")
+  const { id } = useParams<IdParams>();
+  // the playlist info
+  const [pList, setPlist] = useState<PListType>();
+
+  useEffect( () => {
+    const fetchPlaylist = async () => {
+      if(id) {
+        const data = await getPlaylist( id );
+        // set the pList
+        setPlist( data );
+      }
+    } 
+
+    fetchPlaylist();
+  }, [])
+
+  console.log("loaded playlist", pList);
   
   return (
     <div className={styles.root}>
-      <h1 className={styles.title}>{title}</h1>
+      <h1 className={styles.title}>{pList?.title}</h1>
       {
-        tubes?.map((item, idx) => (
+        pList?.tubes.map((item, idx) => (
           <div
             key={`tube-${idx}`}
             className={styles.tube}
@@ -59,6 +75,5 @@ function Playlist() {
   )
 }
 
-Playlist.loader = loader;
 
 export default Playlist
