@@ -13,3 +13,5 @@ export async function getPlaylist( id: number ) {
   console.log("is get playlist with id working?", response.data)
   return response.data;
 }
+
+// create new playlist
