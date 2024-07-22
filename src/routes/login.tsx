@@ -54,7 +54,7 @@ function Login() {
         onSubmit={handleLogin}
       >
         <label>
-          EMAIL: 
+          USERNAME: 
           <input 
             type="string" 
             name="username"

@@ -19,6 +19,7 @@ export type Tube = {
   url: string;
   posX: number;
   posY: number;
+  user: number;
 }
 // define playlist
 export type Playlist = {

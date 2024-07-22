@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getPlaylist } from "../services/playlists.ts";
 import { youtube_parser, convertVid } from "../services/imgHandle.ts";
 import { Tube, Playlist as PListType } from "../lib/types.ts";
+import AddTube from "../components/add-tube.tsx";
 import styles from "../ui/pListStyles.module.css"
 
 // type definitons
@@ -26,6 +27,8 @@ function Playlist() {
   const [pList, setPlist] = useState<PListType>();
   // focused playing tube
   const [focusTube, setFocusTube] = useState<Tube>();
+  // add-tube focus state
+  const [addTubeState, setAddTubeState] = useState(false);
 
   useEffect( () => {
     const fetchPlaylist = async () => {
@@ -51,6 +54,17 @@ function Playlist() {
   return (
     <div className={styles.root}>
       <h1 className={styles.title}>{pList?.playlist.title}</h1>
+      <button
+        onClick={() => setAddTubeState(!addTubeState)}
+      > 
+        ADD A TUBE! 
+      </button>
+      {
+        addTubeState &&
+          <AddTube 
+            setAddTubeState={setAddTubeState}
+          />
+      }
       {
         pList?.tubes.map((item, idx) => (
           <div
