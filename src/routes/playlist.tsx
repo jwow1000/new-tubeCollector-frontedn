@@ -20,13 +20,14 @@ const handleUtubeURL = (path) => {
 }
 
 function Playlist() {
-  console.log("did playlist even load?")
   const { id } = useParams<IdParams>();
 
   // the playlist info
   const [pList, setPlist] = useState<PListType>();
-  // focused playing tube
-  const [focusTube, setFocusTube] = useState<Tube>();
+  // focused playing tube1 and tube2
+  const [focusTube1, setFocusTube1] = useState<Tube>();
+  const [focusTube2, setFocusTube2] = useState<Tube>();
+
   // add-tube focus state
   const [addTubeState, setAddTubeState] = useState(false);
 
@@ -37,67 +38,101 @@ function Playlist() {
         // set the pList
         setPlist( data );
       }
-      console.log(pList?.title)
+      // console.log(pList?.title)
     } 
 
     fetchPlaylist();
-  }, [])
+  }, [id])
   // function to handle when a tube is clicked
-  function handleTubePlay( item: Tube) {
-    console.log("did tube play fire?")
-    setFocusTube( item );
-    console.log("tube info?", item)
+  function handleTubePlay( item: Tube, point: number) {
+    if(point === 1) {
+      setFocusTube1( item );
+    } else {
+      setFocusTube2( item );
+    }
+    // console.log("tube info?", item)
   }
   
   // console.log("loaded playlist", pList);
   
   return (
-    <div className={styles.root}>
-      <h1 className={styles.title}>{pList?.playlist.title}</h1>
-      <button
-        onClick={() => setAddTubeState(!addTubeState)}
-      > 
-        ADD A TUBE! 
-      </button>
-      {
-        addTubeState &&
-          <AddTube 
-            setAddTubeState={setAddTubeState}
-          />
-      }
-      {
-        pList?.tubes.map((item, idx) => (
-          <div
-            key={`tube-${idx}`}
-            className={styles.tube}
-            style={{
-              'left': `${item.posX * 100}%`,
-              'top': `${item.posY * 100}%`
-            }}
-          > 
-            <img 
-              src={ convertVid(item.url) } 
-              alt={item.title}
-              className={styles.tubePic}
-              onClick={() => {handleTubePlay(item)}}
-            >
-                
-            </img>
-          </div>
-        ))
-      }
+    <div>
+      <div id={styles.tubePlayer}>
+        {
+          focusTube1 &&
+          <iframe
+            src={ handleUtubeURL(focusTube1.url) }
+            title={focusTube1.title} 
+            className={styles.focusVid1}
+          >  
+            Tube 1
+          </iframe> 
+        }
+        {   
+          focusTube2 &&
+          <iframe
+            src={ handleUtubeURL(focusTube2.url) }
+            title={focusTube2.title} 
+            className={styles.focusVid2}
+          >  
+            Tube 1
+          </iframe> 
 
-      {
-        focusTube &&
-        <iframe
-          src={ handleUtubeURL(focusTube.url) }
-          title={focusTube.title} 
-          className={styles.focusVid}
-        >  
-            
-  
-        </iframe> 
-      }
+        }
+      </div>
+
+      <div className={styles.root}>
+        <h1 className={styles.title}>{pList?.playlist.title}</h1>
+        <button
+          onClick={() => setAddTubeState(!addTubeState)}
+          className={styles.addTubeButton}
+        > 
+          ADD A TUBE! 
+        </button>
+        {
+          addTubeState &&
+            <AddTube 
+              setAddTubeState={setAddTubeState}
+            />
+        }
+        {
+          pList?.tubes.map((item, idx) => (
+            <div
+              key={`tube-${idx}`}
+              className={styles.tube}
+              style={{
+                'left': `${item.posX * 100}%`,
+                'top': `${item.posY * 100}%`
+              }}
+            > 
+              <img 
+                src={ convertVid(item.url) } 
+                alt={item.title}
+                className={styles.tubePic}
+              >
+                  
+              </img>
+              <button 
+                className={styles.tube1Button}
+                onClick={() => {handleTubePlay(item, 1)}}
+              >
+                Tube 1
+              </button>
+
+              <button 
+                className={styles.tube2Button}
+                onClick={() => {handleTubePlay(item, 2)}}
+              >
+                Tube 2
+              </button>
+
+
+            </div>
+          ))
+        }
+
+        
+      </div>
     </div>
   )
 }

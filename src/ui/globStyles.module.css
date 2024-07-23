@@ -1,5 +1,9 @@
-#grid {
+#navContainer {
+  overflow: hidden;
   display: flex;
   flex-flow: column wrap;
-  
+}
+
+.userTitle {
+  font-size: 2rem;
 }

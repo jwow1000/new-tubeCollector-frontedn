@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { signOut } from "../services/users";
-import { useNavigate, Link, Outlet } from "react-router-dom";
+import { useNavigate, Link, Outlet, NavLink} from "react-router-dom";
 import { getPlaylists } from "../services/playlists.ts"
 import { verifyUser } from "../services/users";
 import { User } from "../lib/types.ts";
@@ -12,8 +12,6 @@ interface Playlist {
   id: string;
   title: string;
 }
-
-type FetchPlists = () => Promise<Playlist[]>;
 
 function Root() {
   // global user 
@@ -63,25 +61,25 @@ function Root() {
   
   return (
     <div>
-      <h1> hello {user?.username}</h1>
+      <h1 className={styles.userTitle}> {user?.username} </h1>
       <button 
         type="button"
         onClick={handleLogout}
       >
         Log Out!
       </button>
-      <div id={styles.grid}>
+      <nav id={styles.navContainer}>
         {
           plists?.map((item, idx) => (
-            <Link
+            <NavLink
               key={`my-playlists-${idx}`}
               to={`playlists/${item.id}`}
             >
               {item.title}
-            </Link>
+            </NavLink>
           ))
         }
-      </div>
+      </nav>
       <Outlet />
     </div>
   )

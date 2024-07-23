@@ -17,7 +17,7 @@ export async function getPlaylist( id: number ) {
 
 // create new playlist
 export async function createPlaylist( cred: Playlist) {
-  const response = await api.post('playlists/create', cred);
+  const response = await api.post('playlists/create/', cred);
   return response.data;
 }
 
