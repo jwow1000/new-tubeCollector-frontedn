@@ -54,7 +54,12 @@
   justify-content: space-around;
   align-items: center;
 }
-
+#tube1Container {
+  background-color: rgb(100,200,100);
+}
+#tube2Container {
+  background-color: rgb(127, 100, 200);
+}
 .focusVid1 {
   border: none;
 }

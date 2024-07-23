@@ -58,27 +58,33 @@ function Playlist() {
   return (
     <div>
       <div id={styles.tubePlayer}>
-        {
-          focusTube1 &&
-          <iframe
-            src={ handleUtubeURL(focusTube1.url) }
-            title={focusTube1.title} 
-            className={styles.focusVid1}
-          >  
-            Tube 1
-          </iframe> 
-        }
-        {   
-          focusTube2 &&
-          <iframe
-            src={ handleUtubeURL(focusTube2.url) }
-            title={focusTube2.title} 
-            className={styles.focusVid2}
-          >  
-            Tube 1
-          </iframe> 
+        <div id={styles.tube1Container}>
+          TUBE 1
+          {
+            focusTube1 &&
+            <iframe
+              src={ handleUtubeURL(focusTube1.url) }
+              title={focusTube1.title} 
+              className={styles.focusVid1}
+            >  
+            </iframe> 
+          }
+        </div>
+        <div id={styles.tube2Container}> 
+          {   
+            focusTube2 &&
+            <label>
+              Tube 2
+              <iframe
+                src={ handleUtubeURL(focusTube2.url) }
+                title={focusTube2.title} 
+                className={styles.focusVid2}
+              >  
+              </iframe> 
+            </label>
 
-        }
+          }
+        </div>
       </div>
 
       <div className={styles.root}>
