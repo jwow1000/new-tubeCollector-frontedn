@@ -1,8 +1,9 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getPlaylist } from "../services/playlists.ts";
 import { youtube_parser, convertVid } from "../services/imgHandle.ts";
 import { Tube, Playlist as PListType } from "../lib/types.ts";
+import TubePlayer from "../components/tube-player.tsx";
 import AddTube from "../components/add-tube.tsx";
 import styles from "../ui/pListStyles.module.css"
 
@@ -21,6 +22,7 @@ const handleUtubeURL = (path) => {
 
 function Playlist() {
   const { id } = useParams<IdParams>();
+  const playerRef1 = useRef<HTMLIFrameElement>(null);
 
   // the playlist info
   const [pList, setPlist] = useState<PListType>();
@@ -58,6 +60,7 @@ function Playlist() {
   return (
     <div>
       <div id={styles.tubePlayer}>
+        <TubePlayer playerRef1={playerRef1} />
         <div id={styles.tube1Container}>
           TUBE 1
           {
@@ -65,7 +68,9 @@ function Playlist() {
             <iframe
               src={ handleUtubeURL(focusTube1.url) }
               title={focusTube1.title} 
-              className={styles.focusVid1}
+              className={styles.focusVid1}               
+              ref={ playerRef1 }
+              
             >  
             </iframe> 
           }

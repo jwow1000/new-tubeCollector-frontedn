@@ -1,0 +1,34 @@
+#root {
+  width: 100%;
+  background-color: rgb(90,90,90);
+  z-index: 100;
+}
+
+.xfadeSlider {
+  appearance: none;
+  width: 100%;
+  height: 5rem;
+  outline: none;
+  opacity: 0.7;
+  transition: opacity .2s;
+}
+
+.xfadeSlider:hover {
+  opacity: 1;
+}
+
+.xfadeSlider::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 5rem;
+  height: 5rem;
+  background: #4caf50;
+  cursor: pointer;
+}
+
+.xfadeSlider::-moz-range-thumb {
+  width: 5rem;
+  height: 5rem;
+  background: #4caf50;
+  cursor: pointer;
+}
