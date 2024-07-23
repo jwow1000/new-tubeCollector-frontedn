@@ -1,0 +1,93 @@
+.root {
+  position: relative;
+  margin: 3rem 0 0 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: 10vw 10vw;
+  background-image:
+    linear-gradient(to right, grey 1px, transparent 1px),
+    linear-gradient(to bottom, grey 1px, transparent 1px);
+
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.tube {
+  /* position: absolute; */
+  width: 6rem;
+  height: 6rem;
+}
+
+.tubePic {
+  object-fit: contain;
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.title {
+  font-size: 2rem;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -200%);
+}
+
+.addTubeButton {
+  font-size: 1rem;
+  position: absolute;
+  top: -3rem;
+  right: 10%;
+}
+
+.video {
+  border: none;
+  width: 5rem;
+  height: 4rem;
+}
+
+#tubePlayer {
+  width: 100vw;
+  display: flex;
+  flex-flow: row;
+  justify-content: space-around;
+  align-items: center;
+}
+#tube1Container {
+  background-color: rgb(100,200,100);
+}
+#tube2Container {
+  background-color: rgb(127, 100, 200);
+}
+.focusVid1 {
+  border: none;
+}
+.focusVid2 {
+  border: none;
+}
+
+/* scale for smaller windows and tablets */
+@media (min-width: 600px) and (max-width: 1199px) {
+  .root {
+    background-size: 5vw 5vw; 
+  }
+  .tube {
+    /* position: absolute; */
+    width: 15vw;
+    height: 15vw;
+  }
+}
+
+/* scale for laptops/PC and large screens */
+@media (min-width: 1200px) {
+  .root {
+    background-size: 5vw 5vw; 
+  } 
+  .tube {
+    /* position: absolute; */
+    width: 15vw;
+    height: 15vw;
+  }
+
+}

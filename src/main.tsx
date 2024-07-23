@@ -6,12 +6,19 @@ import {
 } from "react-router-dom";
 import Root from "./routes/root.tsx";
 import Login from "./routes/login.tsx";
+import Playlist from "./routes/playlist.tsx";
 import "./index.css";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    children: [
+      {
+        path: "/playlists/:id",
+        element: <Playlist />,
+      }
+    ]
   },
   {
     path: "/login",
