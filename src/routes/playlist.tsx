@@ -60,7 +60,9 @@ function Playlist() {
   return (
     <div>
       <div id={styles.tubePlayer}>
-        <TubePlayer playerRef1={playerRef1} />
+        { focusTube1 && 
+          <TubePlayer id={youtube_parser(focusTube1.url)} />
+        }
         <div id={styles.tube1Container}>
           TUBE 1
           {

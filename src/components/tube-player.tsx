@@ -1,4 +1,5 @@
 import { ChangeEvent, useState, RefObject } from "react";
+import Youtube from "../components/youtube";
 import styles from "./tubePlayer.module.css";
 
 interface SliderProps {
@@ -6,8 +7,9 @@ interface SliderProps {
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 interface TubePlayerProps {
-  playerRef1: RefObject<HTMLIFrameElement>;
-
+  // playerRef1: RefObject<HTMLIFrameElement>;
+  id: string;
+  vol: number;
 }
 
 const Slider = ({ xfadeVal, handleChange}: SliderProps ) => {
@@ -25,10 +27,9 @@ const Slider = ({ xfadeVal, handleChange}: SliderProps ) => {
       
     </div>
   )
-
 }
 
-function TubePlayer({ playerRef1 }: TubePlayerProps) {
+function TubePlayer({ id, vol } : TubePlayerProps) {
   const [xfadeVal, setXfadeVal] = useState( 50 ); 
   
 
@@ -41,6 +42,7 @@ function TubePlayer({ playerRef1 }: TubePlayerProps) {
   
   return (
     <div id={styles.root}>
+      <Youtube id={id} vol={xfadeVal} />
       <Slider xfadeVal={xfadeVal} handleChange={handleChange}/>
     </div>
   )
