@@ -1,4 +1,5 @@
-import { ChangeEvent, useState, RefObject } from "react";
+import { ChangeEvent, useState, RefObject, useEffect } from "react";
+import { youtube_parser } from "../services/imgHandle";
 import Youtube from "../components/youtube";
 import styles from "./tubePlayer.module.css";
 
@@ -8,8 +9,13 @@ interface SliderProps {
 }
 interface TubePlayerProps {
   // playerRef1: RefObject<HTMLIFrameElement>;
-  id: string;
-  vol: number;
+  id1: string | null;
+  id2: string | null;
+}
+
+interface TubeIdState {
+  id1: string | null;
+  id2: string | null;
 }
 
 const Slider = ({ xfadeVal, handleChange}: SliderProps ) => {
@@ -29,21 +35,41 @@ const Slider = ({ xfadeVal, handleChange}: SliderProps ) => {
   )
 }
 
-function TubePlayer({ id, vol } : TubePlayerProps) {
+function TubePlayer({ id1, id2 } : TubePlayerProps) {
   const [xfadeVal, setXfadeVal] = useState( 50 ); 
-  
+  const [tubeID1, setTubeID1] = useState<string>("");
+  const [tubeID2, setTubeID2] = useState<string>("");
 
   const handleChange = ( event: React.ChangeEvent<HTMLInputElement> ) => {
     const value = parseInt( event.target.value );
     setXfadeVal( value );
-    playerRef1.current.volume = value;
   }
+
+  useEffect(() => {
+    if(id1 && tubeID1 !== id1) {
+      setTubeID1( youtube_parser( id1 ) );
+    }
+    if(id2 && tubeID2 !== id2) {
+      setTubeID2( youtube_parser( id2 ) );
+    }
+
+  },[id1, id2])
   
   
   return (
     <div id={styles.root}>
-      <Youtube id={id} vol={xfadeVal} />
-      <Slider xfadeVal={xfadeVal} handleChange={handleChange}/>
+      { 
+        id1 &&
+        <Youtube id={youtube_parser(id1)} vol={xfadeVal} className={styles.tube1} />
+      }
+      {
+        id2 &&
+        <Youtube id={youtube_parser(id2)} vol={100 - xfadeVal} className={styles.tube2} />
+      }
+      <Slider 
+        xfadeVal={xfadeVal} 
+        handleChange={handleChange}
+      />
     </div>
   )
 }
