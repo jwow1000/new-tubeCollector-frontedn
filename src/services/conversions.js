@@ -80,3 +80,15 @@ const appendDay =  function(day) {
         return `${parseDate(slicedDate)} ${parseTime(slicedTime)}`;
     }
   }
+
+  // basic power xfade mix. val: 0-100, pow: 0-1
+  export const xfadeConvert = ( val, pow ) => {
+    // normalise to 0-1
+    const norm = val / 100;
+    // scale the pow parameter
+    const power = (pow * 12) + 2;
+    // add the curve and invert
+    const curve = Math.pow( 1 - norm, power);
+    // return value back to 0-100
+    return (1-curve) * 100;
+  }

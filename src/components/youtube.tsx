@@ -1,5 +1,5 @@
 import YouTube, { YouTubeEvent, YouTubeProps } from 'react-youtube';
-import { useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 interface VideoPlayerProps {
   id: string | null;
@@ -11,11 +11,15 @@ interface VideoPlayerProps {
 
 function VideoPlayer({ id, vol, className }: VideoPlayerProps) {
   // use react reference
-  const player = useRef();
+  // const player = useRef();
+  const [player, setPlayer] = useState();
+ 
 
   // useEffect for volume change
   useEffect(() => {
-    
+    if(player) {
+      player.setVolume( vol );
+    }
   }, [vol])
 
   const opts: YouTubeProps['opts'] = {
@@ -25,21 +29,31 @@ function VideoPlayer({ id, vol, className }: VideoPlayerProps) {
       // https://developers.google.com/youtube/player_parameters
     },
   };
-  // function to control volume
-  const onPlayerReady: YouTubeEvent['data'] = (data) => {
-    // access to player in all event handlers via event.target
-    console.log("on ready: ", data);
-    // console.log("look at onReady event: ", event.target);
-    // event.target.setVolume( 1 );
+  
+
+  // callback function to set youtube as useState
+  const onPlayerReady: YouTubeProps['onReady'] = (event) => {
+    console.log("did on ready fire?");
+    setPlayer(event.target);
+    console.log( "player: ", player )
   }
+
+
+  // function to control volume
+  // const onPlayerReady: YouTubeEvent['data'] = (data) => {
+  //   // access to player in all event handlers via event.target
+  //   console.log("on ready: ", data);
+  //   // console.log("look at onReady event: ", event.target);
+  //   // event.target.setVolume( 1 );
+  // }
   
   
   // state change
-  const onStateChange: YouTubeProps['onStateChange'] = (event) => {
-    // access to player in all event handlers via event.target
-    console.log( event.target );
-    event.target.setVolume(100);
-  }
+  // const onStateChange: YouTubeProps['onStateChange'] = (event) => {
+  //   // access to player in all event handlers via event.target
+  //   console.log( event.target );
+  //   event.target.setVolume(100);
+  // }
 
   // const volChange: YouTubeProps['opts']
 
@@ -50,10 +64,9 @@ function VideoPlayer({ id, vol, className }: VideoPlayerProps) {
       videoId={id} 
       opts={opts} 
       
-      onStateChange={onStateChange}
-      RefObject={player}
+      // onStateChange={onStateChange}
       className={className}
-      onPlayerReady={onPlayerReady}
+      onReady={ onPlayerReady }
       
       
     />
