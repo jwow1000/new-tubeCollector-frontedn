@@ -7,3 +7,19 @@
 .userTitle {
   font-size: 2rem;
 }
+
+
+/* scale for smaller windows and tablets */
+@media (min-width: 600px) and (max-width: 1199px) {
+  .root {
+    background-size: 5vw 5vw; 
+  }
+}
+
+/* scale for laptops/PC and large screens */
+@media (min-width: 1200px) {
+  .root {
+    background-size: 5vw 5vw; 
+  } 
+
+}

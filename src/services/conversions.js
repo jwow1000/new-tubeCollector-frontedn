@@ -89,6 +89,15 @@ const appendDay =  function(day) {
     const power = (pow * 12) + 2;
     // add the curve and invert
     const curve = Math.pow( 1 - norm, power);
-    // return value back to 0-100
-    return (1-curve) * 100;
+    // return value 
+    return (1-curve);
+  }
+
+  export const volCurve = (val) => {
+    // normalize
+    const norm = val / 100;
+    // curve 
+    const curve = Math.pow(norm, 2);
+    // return 0-100 value
+    return curve * 100; 
   }

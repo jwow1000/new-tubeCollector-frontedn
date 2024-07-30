@@ -1,39 +1,140 @@
 #root {
-  width: 100%;
+  position: relative;
+  width: 100vw;
+  height: 12rem;
+  min-width: 10rem;
   background-color: rgb(90,90,90);
   z-index: 100;
 }
 
-.xfadeSlider {
-  appearance: none;
-  width: 100%;
-  height: 5rem;
-  outline: none;
-  opacity: 0.7;
-  transition: opacity .2s;
+.slider {
+  appearance: none; 
 }
 
-.xfadeSlider:hover {
-  opacity: 1;
-}
-
-.xfadeSlider::-webkit-slider-thumb {
+.slider::-webkit-slider-thumb {
   appearance: none;
   -webkit-appearance: none;
-  width: 5rem;
-  height: 5rem;
-  background: #4caf50;
+  width: 2rem;
+  height: 3rem;
+  color: #323232;
   cursor: pointer;
 }
 
-.xfadeSlider::-moz-range-thumb {
-  width: 5rem;
-  height: 5rem;
-  background: #4caf50;
+.slider::-moz-range-thumb {
+  width: 15%;
+  height: 100%;
+  background: #323232;
   cursor: pointer;
 }
 
-.tube1{
-  width: 16rem;
+#xfade {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 50%;
+  transform: translateX(50%);
+  width: 50%;
+  height: 3rem;
+
+  appearance: none;
+  background: rgb(199,130,224);
+  background: linear-gradient(90deg, rgba(199,130,224,1) 0%, rgba(173,255,51,1) 100%); 
+  outline: 0.1rem solid black;
+}
+
+#curve {
+  width: 10rem;
+  appearance: none;
+  background: rgb(255, 193, 111);
+}
+
+#triangle {
+  width: 1rem;
+}
+#square {
+  width: 1rem;
+}
+
+#curveContainer {
+  position: absolute;
+  width: 40%;
+  bottom: 0;
+  right: 50%;
+  transform: translate(50%);
+  display: flex;
+  flex-flow: row;
+  gap: 0.2rem;
+
+}
+
+/* the gain slider class */
+.gainSlider {
+  writing-mode: vertical-rl;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 4rem;
+  height: 5rem;
+  direction: rtl;
+  
+
+}
+
+.gainSlider::-moz-range-thumb {
+  width: 4rem;
+  height: 1rem;
+  color: rgb(49, 49, 49);
+}
+
+#gain1 {
+  background-color: #C782E0;
+  /* position */
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+}
+
+#gain2 {
+  background-color: #ADFF33;
+  /* position */
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+}
+
+
+#tube1Container {
+  position: absolute;
+  width: 40%;
   height: 6rem;
+  background-color: #C782E0;
+  
+  /* display stuff */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#tube2Container {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 40%;
+  height: 6rem;
+  background-color: #ADFF33;
+
+  /* display stuff */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tube1 {
+  object-fit: contain;
+  width: 95%;
+  height: 95%;
+}
+.tube2 {
+  object-fit: contain;
+  width: 95%;
+  height: 95%;
 }
