@@ -60,8 +60,13 @@ function Playlist() {
   return (
     <div>
       <div id={styles.tubePlayer}>
-        <TubePlayer playerRef1={playerRef1} />
-        <div id={styles.tube1Container}>
+        { 
+          <TubePlayer 
+            id1={focusTube1?.url} 
+            id2={focusTube2?.url} 
+          />
+        }
+        {/* <div id={styles.tube1Container}>
           TUBE 1
           {
             focusTube1 &&
@@ -89,7 +94,7 @@ function Playlist() {
             </label>
 
           }
-        </div>
+        </div> */}
       </div>
 
       <div className={styles.root}>
