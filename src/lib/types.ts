@@ -9,21 +9,21 @@ export type UserCred =  {
 // define global user type
 export type User = {
   username: string;
-  id: string;
+  userId: number;
 };
 
 // define tube
 export type Tube = {
+  // user: number;
   title: string;
   description: string;
   url: string;
   posX: number;
   posY: number;
-  user: number;
 }
 // define playlist
 export type Playlist = {
   title: string;
   tubes: Tube[];
-  user: string;
+  userId: number;
 }

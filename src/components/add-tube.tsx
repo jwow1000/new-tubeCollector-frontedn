@@ -17,7 +17,7 @@ const tubeCred: Tube = {
 }
 
 
-function AddTube( { setAddTubeState } ) {
+function AddTube( { setAddTubeState, setUpdatePlist } ) {
   // get the params
   const params = useParams();
   //console.log("add tube params: ", params);
@@ -45,6 +45,7 @@ function AddTube( { setAddTubeState } ) {
       const userData = await postTube( data, params.id );
       // close the add-tube window
       setAddTubeState( false );
+      setUpdatePlist( (prev) => !prev );
       return userData;
 
     } catch(error) {
@@ -88,7 +89,7 @@ function AddTube( { setAddTubeState } ) {
         </label>
          
         <label>
-          Tube URL: 
+          posX 
           <input 
             type="number" 
             name="posX"
@@ -98,7 +99,7 @@ function AddTube( { setAddTubeState } ) {
         </label>
         
         <label>
-          Tube URL: 
+          posY
           <input 
             type="number" 
             name="posY"

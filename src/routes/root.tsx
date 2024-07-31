@@ -4,7 +4,8 @@ import { useNavigate, Link, Outlet, NavLink} from "react-router-dom";
 import { getPlaylists } from "../services/playlists.ts"
 import { verifyUser } from "../services/users";
 import { User } from "../lib/types.ts";
-import styles from "../ui/globStyles.module.css"
+import styles from "../ui/globStyles.module.css";
+import rootStyles from "../ui/root.module.css";
 import useStore from "../lib/useStore.ts";
 
 // Define the types
@@ -57,23 +58,43 @@ function Root() {
     
     // Redirect or perform other actions after logout
   };
+
+  const handleNewPlaylist = async () => {
+    
+    
+    // Redirect or perform other actions after logout
+  };
   
   
   return (
-    <div>
-      <h1 className={styles.userTitle}> {user?.username} </h1>
-      <button 
-        type="button"
-        onClick={handleLogout}
-      >
-        Log Out!
-      </button>
-      <nav id={styles.navContainer}>
+    <body>
+      <div id={styles.navBarContainer}>
+        <h1 className={styles.userTitle}> user: {user?.username} </h1>
+        
+        <button 
+          type="button"
+          onClick={handleNewPlaylist}
+        >
+          + Playlist
+        </button>
+
+        <button 
+          type="button"
+          onClick={handleLogout}
+        >
+          Log Out!
+        </button>
+
+
+      </div>
+      <h2>{user?.username}'s playlists: </h2>
+      <nav id={styles.pListContainer}>
         {
           plists?.map((item, idx) => (
             <NavLink
               key={`my-playlists-${idx}`}
               to={`playlists/${item.id}`}
+              className={styles.pListLink}
             >
               {item.title}
             </NavLink>
@@ -81,7 +102,7 @@ function Root() {
         }
       </nav>
       <Outlet />
-    </div>
+    </body>
   )
 }
 

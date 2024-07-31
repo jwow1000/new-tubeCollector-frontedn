@@ -18,6 +18,9 @@
   /* position: absolute; */
   width: 6rem;
   height: 6rem;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
 }
 
 .tubePic {
@@ -27,18 +30,20 @@
 }
 
 .title {
-  font-size: 2rem;
+  font-size: 0.7rem;
   position: absolute;
   top: 0;
-  left: 50%;
-  transform: translate(-50%, -200%);
+  left: 0%;
+  background-color: rgb(39, 102, 102);
+  padding: 0.2rem;
 }
 
 .addTubeButton {
+  background-color:  rgb(220, 61, 178);
   font-size: 1rem;
   position: absolute;
-  top: -3rem;
-  right: 10%;
+  top: 1%;
+  right: 1%;
 }
 
 .video {
@@ -48,6 +53,7 @@
 }
 
 #tubePlayer {
+  margin: 1rem 0 0 0;
   width: 100vw;
   height: 10rem;
   background-color: rgb(90,90,90);
@@ -56,11 +62,19 @@
   justify-content: space-around;
   align-items: center;
 }
+
 #tube1Container {
   background-color: rgb(100,200,100);
 }
 #tube2Container {
   background-color: rgb(127, 100, 200);
+}
+
+.tube1Button {
+  background-color: rgb(127, 100, 200);
+}
+.tube2Button {
+  background-color: rgb(100,200,100);
 }
 .focusVid1 {
   border: none;

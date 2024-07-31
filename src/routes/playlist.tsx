@@ -13,25 +13,27 @@ type IdParams = {
 }
 
 // make an embed from any type of youtube link
-const handleUtubeURL = (path) => {
-  const link = youtube_parser(path);
-  // console.log('whats this link look like', link);
-  const embed = `https://www.youtube.com/embed/${link}`;
-  return embed ? embed : null;
-}
+// const handleUtubeURL = (path) => {
+//   const link = youtube_parser(path);
+//   // console.log('whats this link look like', link);
+//   const embed = `https://www.youtube.com/embed/${link}`;
+//   return embed ? embed : null;
+// }
 
 function Playlist() {
   const { id } = useParams<IdParams>();
-  const playerRef1 = useRef<HTMLIFrameElement>(null);
-
+  
+  
   // the playlist info
   const [pList, setPlist] = useState<PListType>();
   // focused playing tube1 and tube2
   const [focusTube1, setFocusTube1] = useState<Tube>();
   const [focusTube2, setFocusTube2] = useState<Tube>();
+  
 
   // add-tube focus state
   const [addTubeState, setAddTubeState] = useState(false);
+  const [updatePlist, setUpdatePlist] = useState(false);
 
   useEffect( () => {
     const fetchPlaylist = async () => {
@@ -44,7 +46,7 @@ function Playlist() {
     } 
 
     fetchPlaylist();
-  }, [id])
+  }, [id, updatePlist])
   // function to handle when a tube is clicked
   function handleTubePlay( item: Tube, point: number) {
     if(point === 1) {
@@ -66,35 +68,6 @@ function Playlist() {
             id2={focusTube2?.url} 
           />
         }
-        {/* <div id={styles.tube1Container}>
-          TUBE 1
-          {
-            focusTube1 &&
-            <iframe
-              src={ handleUtubeURL(focusTube1.url) }
-              title={focusTube1.title} 
-              className={styles.focusVid1}               
-              ref={ playerRef1 }
-              
-            >  
-            </iframe> 
-          }
-        </div>
-        <div id={styles.tube2Container}> 
-          {   
-            focusTube2 &&
-            <label>
-              Tube 2
-              <iframe
-                src={ handleUtubeURL(focusTube2.url) }
-                title={focusTube2.title} 
-                className={styles.focusVid2}
-              >  
-              </iframe> 
-            </label>
-
-          }
-        </div> */}
       </div>
 
       <div className={styles.root}>
@@ -109,6 +82,7 @@ function Playlist() {
           addTubeState &&
             <AddTube 
               setAddTubeState={setAddTubeState}
+              setUpdatePlist={setUpdatePlist}
             />
         }
         {
