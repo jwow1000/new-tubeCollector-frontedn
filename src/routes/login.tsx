@@ -16,10 +16,10 @@ function Login() {
 
   const initUser: User = {
     username: "",
-    id: "",
+    id: 0,
   }
 
-  const { setUser } = useStore();
+  const { setGlobalUser } = useStore();
 
   const [ data, setData ] = useState( loginCred );
 
@@ -39,7 +39,7 @@ function Login() {
       // 
       const userData = await loginUser( data );
       // set the userr using useStore( Zustand )
-      setUser( userData ); 
+      setGlobalUser( userData ); 
       // navigate to root
       navigate("/");
 

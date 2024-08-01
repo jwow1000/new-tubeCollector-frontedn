@@ -30,7 +30,7 @@
 }
 
 .title {
-  font-size: 0.7rem;
+  font-size: 1.1rem;
   position: absolute;
   top: 0;
   left: 0%;
@@ -81,6 +81,14 @@
 }
 .focusVid2 {
   border: none;
+}
+
+#deletePlistButton {
+  background-color:  rgb(220, 61, 178);
+  font-size: 1rem;
+  position: absolute;
+  top: 1%;
+  right: 50%;
 }
 
 /* scale for smaller windows and tablets */

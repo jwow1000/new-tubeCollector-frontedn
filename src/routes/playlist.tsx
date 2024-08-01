@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
-import { getPlaylist } from "../services/playlists.ts";
+import { getPlaylist, deletePlaylist, updatePlaylist } from "../services/playlists.ts";
 import { youtube_parser, convertVid } from "../services/imgHandle.ts";
 import { Tube, Playlist as PListType } from "../lib/types.ts";
 import TubePlayer from "../components/tube-player.tsx";
@@ -58,6 +58,16 @@ function Playlist() {
   }
   
   // console.log("loaded playlist", pList);
+  // function to delete playlist
+  const handleDelete = () => {
+    const del = async (x: number) => {
+      const data = deletePlaylist(x);
+      return data;
+    }
+    
+    del(id);
+    setUpdatePlist((prev) => !prev);
+  }
   
   return (
     <div>
@@ -85,6 +95,12 @@ function Playlist() {
               setUpdatePlist={setUpdatePlist}
             />
         }
+        <button
+          onClick={ handleDelete }
+          id={ styles.deletePlistButton }
+        >
+          Delete this Playlist!
+        </button>
         {
           pList?.tubes.map((item, idx) => (
             <div

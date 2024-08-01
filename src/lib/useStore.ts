@@ -2,13 +2,13 @@ import { create } from "zustand";
 import { User } from "./types.ts";
 
 interface UserStore {
-  user: User | null;
-  setUser: (user: User) => void;
+  globalUser: User | null;
+  setGlobalUser: (globalUser: User) => void;
 }
 
 const useStore = create<UserStore>((set) => ({
-  user: null,
-  setUser: (user) => set({ user }),
+  globalUser: null,
+  setGlobalUser: (globalUser) => set({ globalUser }),
 }));
 
 export default useStore;

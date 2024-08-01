@@ -11,7 +11,6 @@ export async function getPlaylists() {
 // get playlist by id
 export async function getPlaylist( id: number ) {
   const response = await api.get(`/playlists/${ id }`);
-  console.log("is get playlist with id working?", response.data)
   return response.data;
 }
 
@@ -20,6 +19,19 @@ export async function createPlaylist( cred: Playlist) {
   const response = await api.post('playlists/create/', cred);
   return response.data;
 }
+
+// delete playlist with id
+export async function deletePlaylist( id: number ) {
+  const response = await api.delete(`/playlists/${ id }`);
+  return response.data;
+}
+
+// update playlist infp
+export async function updatePlaylist( id: number, cred: Playlist ) {
+  const response = await api.post(`/playlists/${ id }`, cred);
+  return response.data;
+}
+
 
 // create a tube and add it to a playlist
 export async function addTube( cred: Tube, listID: number ) {
@@ -31,6 +43,6 @@ export async function addTube( cred: Tube, listID: number ) {
   return pListRes;
 }
 
-// remove a tube from a playlist
+// remove a tube from a playlistnn
 
 // edit a tube

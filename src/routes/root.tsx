@@ -4,9 +4,7 @@ import { useNavigate, Link, Outlet, NavLink} from "react-router-dom";
 import { getPlaylists } from "../services/playlists.ts"
 import { verifyUser } from "../services/users";
 import AddPlaylist from "../components/add-playlist.tsx";
-import { User } from "../lib/types.ts";
 import styles from "../ui/globStyles.module.css";
-import rootStyles from "../ui/root.module.css";
 import useStore from "../lib/useStore.ts";
 
 // Define the types
@@ -17,7 +15,7 @@ interface Playlist {
 
 function Root() {
   // global user 
-  const { user, setUser } = useStore();
+  const { globalUser, setGlobalUser } = useStore();
   // useStates
   const [addPlaylistState, setAddPlaylistState] = useState(false);
   const [plists, setPlists] = useState<Playlist[]>([]);
@@ -27,9 +25,7 @@ function Root() {
     const fetchUser = async () => {
       try{
         const userData = await verifyUser();
-        console.log("user datatat", userData)
-        setUser( userData.user );
-        console.log( "verified", user)
+        setGlobalUser( userData.user );
 
       } catch(error) {
         navigate("/login");
@@ -43,7 +39,7 @@ function Root() {
     }
 
     // fetch the user if there is none
-    if(!user) {
+    if(!globalUser) {
       fetchUser();
     }
 
@@ -65,9 +61,9 @@ function Root() {
   
   
   return (
-    <body>
+    <div>
       <div id={styles.navBarContainer}>
-        <h1 className={styles.userTitle}> user: {user?.username} </h1>
+        <h1 className={styles.userTitle}> user: {globalUser?.username} </h1>
         
         <button 
           type="button"
@@ -85,7 +81,7 @@ function Root() {
 
 
       </div>
-      <h2>{user?.username}'s playlists: </h2>
+      <h2>{globalUser?.username}'s playlists: </h2>
       <nav id={styles.pListContainer}>
         {
           plists?.map((item, idx) => (
@@ -104,7 +100,7 @@ function Root() {
         <AddPlaylist setAddPlaylistState={setAddPlaylistState}/>
       }
       <Outlet />
-    </body>
+    </div>
   )
 }
 

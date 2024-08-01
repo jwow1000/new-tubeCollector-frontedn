@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Playlist } from '../lib/types';
 import { createPlaylist } from '../services/playlists';
 import useStore from "../lib/useStore.ts";
@@ -6,15 +6,24 @@ import useStore from "../lib/useStore.ts";
 const pListCred: Playlist = {
   title: "",
   tubes: [],
-  userId: 0,
+  user: 0,
 }
 
 function AddPlaylist( { setAddPlaylistState } ) {
   // get global user data
-  const { user, setUser } = useStore();
+  const { globalUser, setGlobalUser } = useStore();
 
   // state for the tube data
   const [ data, setData ] = useState<Playlist>( pListCred );
+ 
+  useEffect(()=>{
+    
+    setData((prev) => ({
+      ...prev,
+      user: globalUser.id,
+    }));
+
+  },[]);
   
   // handle input changes
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -30,14 +39,12 @@ function AddPlaylist( { setAddPlaylistState } ) {
   // handle create action, form submit
   async function handleCreate(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+  
     
-    setData((prev) => ({
-      ...prev,
-      userId: user.userId,
-    }));
-
     try {
+      
       // post the new tube to the current playlist
+      console.log("this is waht the data looks like: ", data);
       const userData = await createPlaylist( data );
       // close the add-tube window
       setAddPlaylistState( false );
