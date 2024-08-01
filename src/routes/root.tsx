@@ -3,6 +3,7 @@ import { signOut } from "../services/users";
 import { useNavigate, Link, Outlet, NavLink} from "react-router-dom";
 import { getPlaylists } from "../services/playlists.ts"
 import { verifyUser } from "../services/users";
+import AddPlaylist from "../components/add-playlist.tsx";
 import { User } from "../lib/types.ts";
 import styles from "../ui/globStyles.module.css";
 import rootStyles from "../ui/root.module.css";
@@ -17,6 +18,8 @@ interface Playlist {
 function Root() {
   // global user 
   const { user, setUser } = useStore();
+  // useStates
+  const [addPlaylistState, setAddPlaylistState] = useState(false);
   const [plists, setPlists] = useState<Playlist[]>([]);
   
   useEffect(() => {
@@ -59,11 +62,6 @@ function Root() {
     // Redirect or perform other actions after logout
   };
 
-  const handleNewPlaylist = async () => {
-    
-    
-    // Redirect or perform other actions after logout
-  };
   
   
   return (
@@ -73,7 +71,7 @@ function Root() {
         
         <button 
           type="button"
-          onClick={handleNewPlaylist}
+          onClick={ () => setAddPlaylistState(!addPlaylistState) }
         >
           + Playlist
         </button>
@@ -101,6 +99,10 @@ function Root() {
           ))
         }
       </nav>
+      {
+        addPlaylistState &&
+        <AddPlaylist setAddPlaylistState={setAddPlaylistState}/>
+      }
       <Outlet />
     </body>
   )

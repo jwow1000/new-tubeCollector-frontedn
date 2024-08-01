@@ -24,7 +24,7 @@ function AddPlaylist( { setAddPlaylistState } ) {
       ...prev,
       [name]: value,
     }));
-    console.log("input change add-tube", data);
+    // console.log("input change playlist", data);
   }
 
   // handle create action, form submit
@@ -51,7 +51,7 @@ function AddPlaylist( { setAddPlaylistState } ) {
   return (
     <div>
       <form  
-        onSubmit={handleCreate} 
+        onSubmit={ handleCreate } 
       >
         <label>
           Playlist Name: 
