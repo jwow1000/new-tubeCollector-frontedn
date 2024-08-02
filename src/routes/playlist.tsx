@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
+import useConfirm from "../components/alert.tsx";
 import { getPlaylist, deletePlaylist, updatePlaylist } from "../services/playlists.ts";
 import { youtube_parser, convertVid } from "../services/imgHandle.ts";
 import { Tube, Playlist as PListType } from "../lib/types.ts";
@@ -26,7 +27,7 @@ function Playlist() {
   // useConfirm
   const [Dialog, confirmDelete] = useConfirm(
     'Are you sure?',
-    'Are you sure you want to delete user "Isaac Kwok"?',
+    'Are you sure you want to delete this Playlist?'
   );
   
   
@@ -35,6 +36,8 @@ function Playlist() {
   // focused playing tube1 and tube2
   const [focusTube1, setFocusTube1] = useState<Tube>();
   const [focusTube2, setFocusTube2] = useState<Tube>();
+  // state of Alert Dialog
+  const [ dialogState, setDialogState ] = useState( false );
   
 
   // add-tube focus state
@@ -53,6 +56,7 @@ function Playlist() {
 
     fetchPlaylist();
   }, [id, updatePlist])
+  
   // function to handle when a tube is clicked
   function handleTubePlay( item: Tube, point: number) {
     if(point === 1) {
@@ -63,26 +67,51 @@ function Playlist() {
     // console.log("tube info?", item)
   }
   
-  // console.log("loaded playlist", pList);
   // function to delete playlist
-  const handleDelete = async () => {
+  const handleDeletePlaylist = async () => {
     const del = async (x: number) => {
       const data = deletePlaylist(x);
       return data;
     }
+    setDialogState( true );
     const answer = await confirmDelete();
 
     if(answer) {
       del( id );
       setUpdatePlist((prev) => !prev);
+      setDialogState( false );
 
     } else {
-
+      setDialogState( false )
     }
+  }
+
+  // function to delete tube
+  const handleDeleteTube = async (item: Tube) => {
+    console.log( "delete tube", item);
+    // const del = async (x: number) => {
+    //   const data = deletePlaylist(x);
+    //   return data;
+    // }
+    // setDialogState( true );
+    // const answer = await confirmDelete();
+
+    // if(answer) {
+    //   del( id );
+    //   setUpdatePlist((prev) => !prev);
+    //   setDialogState( false );
+
+    // } else {
+    //   setDialogState( false )
+    // }
   }
   
   return (
     <div>
+      {
+        dialogState &&
+        <Dialog />
+      }
       <div id={styles.tubePlayer}>
         { 
           <TubePlayer 
@@ -108,7 +137,7 @@ function Playlist() {
             />
         }
         <button
-          onClick={ handleDelete }
+          onClick={ handleDeletePlaylist }
           id={ styles.deletePlistButton }
         >
           Delete this Playlist!
@@ -142,6 +171,12 @@ function Playlist() {
                 onClick={() => {handleTubePlay(item, 2)}}
               >
                 Tube 2
+              </button>
+              <button 
+                className={styles.deleteTube}
+                onClick={() => {handleDeleteTube( item )}}
+              >
+                Delete
               </button>
 
 

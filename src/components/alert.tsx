@@ -4,30 +4,21 @@ import styles from "../ui/confirm.module.css";
 type ConfProps = {
   title: string;
   description: string;
-  confirmBtnLabel: string;
-  isOpen: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
-
 }
 
-function Alert({
-  title, 
-  description,
-  isOpen,
-  onClose,
-  confirmBtnLabel,
-  onConfirm,
-  }: ConfProps) {
+function useConfirm(
+    title: string,
+    description: string
+  ) {
   
   const [promise, setPromise] = useState(null);
-  
+
   const confirm = () => new Promise((resolve, reject) => {
     setPromise({ resolve });
   });
 
   const handleClose = () => {
-    setPromise( null );
+    setPromise(null);
   };
 
   const handleConfirm = () => {
@@ -41,18 +32,20 @@ function Alert({
   };
 
   const ConfirmationDialog = () => (
-    <div id={styles.root} >
+    <div id={styles.root} onClick={ handleCancel }>
       <div id={styles.container}>
         <h2 id={styles.title}> {title} </h2>
-        <p id={styles.message}> {message} </p>
-        <button onClick={ handleConfirm} id={styles.yesButton} > Yes </button>
-        <button onClick={ handleCancel } id={styles.cancelButton} > Cancel </button>
+        <p id={styles.message}> {description} </p>
+        <div id={styles.buttons}>
+          <button onClick={ handleConfirm } id={styles.yesButton} > Yes </button>
+          <button onClick={ handleCancel } id={styles.cancelButton} > Cancel </button>
+        </div>
       </div>
     </div>
 
-  );
-
+  );  
   return [ConfirmationDialog, confirm];
+
 }
 
-export default Alert;
+export default useConfirm;
