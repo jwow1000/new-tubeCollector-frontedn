@@ -1,0 +1,40 @@
+#root {
+  background-color: black;
+  opacity: 0.3;
+  z-index: 1000;
+
+  /* position */
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  
+  /* center the container */
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+  
+}
+
+#container {
+  width: 80vw;
+  height: 10rem;
+  background-color: rgb(196, 165, 165);
+}
+
+#title {
+  color: rgb(200,45,233);
+
+}
+
+#message {
+
+}
+
+#yesButton {
+
+}
+
+#cancelButton {
+
+}

@@ -22,6 +22,12 @@ type IdParams = {
 
 function Playlist() {
   const { id } = useParams<IdParams>();
+
+  // useConfirm
+  const [Dialog, confirmDelete] = useConfirm(
+    'Are you sure?',
+    'Are you sure you want to delete user "Isaac Kwok"?',
+  );
   
   
   // the playlist info
@@ -59,14 +65,20 @@ function Playlist() {
   
   // console.log("loaded playlist", pList);
   // function to delete playlist
-  const handleDelete = () => {
+  const handleDelete = async () => {
     const del = async (x: number) => {
       const data = deletePlaylist(x);
       return data;
     }
-    
-    del(id);
-    setUpdatePlist((prev) => !prev);
+    const answer = await confirmDelete();
+
+    if(answer) {
+      del( id );
+      setUpdatePlist((prev) => !prev);
+
+    } else {
+
+    }
   }
   
   return (
