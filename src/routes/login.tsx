@@ -1,8 +1,9 @@
 import { useState } from "react"
 import useStore from "../lib/useStore";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
 import { UserCred, User } from "../lib/types";
 import { Login as loginUser } from "../services/users"
+import styles from "../ui/globStyles.module.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -50,6 +51,11 @@ function Login() {
   
   return (
     <div>
+      <NavLink to="/register" className={ styles.signUpLink }>
+          
+        Don't have an account: Sign Up!
+      </NavLink>
+      <button>  </button>
       <form 
         onSubmit={handleLogin}
       >

@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import Root from "./routes/root.tsx";
 import Login from "./routes/login.tsx";
+import Register from "./routes/register.tsx";
 import Playlist from "./routes/playlist.tsx";
 import "./index.css";
 
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />
+  },
+  {
+    path: "/register",
+    element: <Register />
   }
 ]);
 
