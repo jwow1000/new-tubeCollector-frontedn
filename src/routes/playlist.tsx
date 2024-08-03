@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useOutletContext, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import useConfirm from "../components/alert.tsx";
 import { getPlaylist, deletePlaylist } from "../services/playlists.ts";
@@ -8,8 +8,10 @@ import TubePlayer from "../components/tube-player.tsx";
 import AddTube from "../components/add-tube.tsx";
 import styles from "../ui/pListStyles.module.css"
 
-function Playlist({ refresh }) {
+function Playlist() {
   const { id } = useParams< 'id' >();
+  const setRefresh = useOutletContext();
+  const navigate = useNavigate();
 
   // useConfirm
   const [Dialog, confirmDelete] = useConfirm(
@@ -42,7 +44,7 @@ function Playlist({ refresh }) {
     } 
 
     fetchPlaylist();
-  }, [id, updatePlist, refresh])
+  }, [id, updatePlist])
   
   // function to handle when a tube is clicked
   function handleTubePlay( item: Tube, point: number) {
@@ -65,8 +67,10 @@ function Playlist({ refresh }) {
 
     if(answer) {
       del( parseInt( id ) );
-      setUpdatePlist((prev) => !prev);
+
+      setRefresh(( prev: boolean )=> !prev)
       setDialogState( false );
+      navigate("/");
 
     } else {
       setDialogState( false )

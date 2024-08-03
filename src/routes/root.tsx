@@ -43,7 +43,7 @@ function Root() {
     if(!globalUser) {
       fetchUser();
     }
-
+    console.log("the playlists are refreshed")
     // fetch the playlists
     fetchPlists();
   }, [refresh]);     
@@ -99,7 +99,7 @@ function Root() {
         addPlaylistState &&
         <AddPlaylist setAddPlaylistState={setAddPlaylistState} setRefresh={setRefresh}/>
       }
-      <Outlet context={refresh} />
+      <Outlet context={ setRefresh } />
     </div>
   )
 }
