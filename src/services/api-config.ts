@@ -1,7 +1,8 @@
 import axios from 'axios';
-
+const API_ENDPOINT = import.meta.env.VITE_REACT_APP_API_ENDPOINT
+console.log("api load root: ", API_ENDPOINT)
 const api = axios.create({
-  baseURL: 'http://localhost:8000', // Your backend URL
+  baseURL: API_ENDPOINT
 });
 
 api.interceptors.request.use(
