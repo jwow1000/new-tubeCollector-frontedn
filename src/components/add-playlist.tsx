@@ -9,7 +9,7 @@ const pListCred: Playlist = {
   user: 0,
 }
 
-function AddPlaylist( { setAddPlaylistState } ) {
+function AddPlaylist( { setAddPlaylistState, setRefresh } ) {
   // get global user data
   const { globalUser, setGlobalUser } = useStore();
 
@@ -48,6 +48,7 @@ function AddPlaylist( { setAddPlaylistState } ) {
       const userData = await createPlaylist( data );
       // close the add-tube window
       setAddPlaylistState( false );
+      setRefresh((prev: boolean)=> !prev)
       return userData;
 
     } catch(error) {

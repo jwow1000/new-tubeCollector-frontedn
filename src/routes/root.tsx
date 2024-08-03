@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { signOut } from "../services/users";
-import { useNavigate, Link, Outlet, NavLink} from "react-router-dom";
+import { useNavigate, Outlet, NavLink} from "react-router-dom";
 import { getPlaylists } from "../services/playlists.ts"
 import { verifyUser } from "../services/users";
 import AddPlaylist from "../components/add-playlist.tsx";
@@ -19,6 +19,7 @@ function Root() {
   // useStates
   const [addPlaylistState, setAddPlaylistState] = useState(false);
   const [plists, setPlists] = useState<Playlist[]>([]);
+  const [refresh, setRefresh] = useState(false);
   
   useEffect(() => {
     // fetch the user function
@@ -35,7 +36,7 @@ function Root() {
     // get the playlists function
     const fetchPlists = async () => {
       const data = await getPlaylists();
-      setPlists( data);
+      setPlists( data );
     }
 
     // fetch the user if there is none
@@ -45,7 +46,7 @@ function Root() {
 
     // fetch the playlists
     fetchPlists();
-  }, []);     
+  }, [refresh]);     
 
   const navigate = useNavigate();
   // get data from loader function
@@ -58,7 +59,6 @@ function Root() {
     // Redirect or perform other actions after logout
   };
 
-  
   
   return (
     <div>
@@ -97,9 +97,9 @@ function Root() {
       </nav>
       {
         addPlaylistState &&
-        <AddPlaylist setAddPlaylistState={setAddPlaylistState}/>
+        <AddPlaylist setAddPlaylistState={setAddPlaylistState} setRefresh={setRefresh}/>
       }
-      <Outlet />
+      <Outlet context={refresh} />
     </div>
   )
 }

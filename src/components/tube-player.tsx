@@ -49,8 +49,6 @@ const Slider = ({ value, handleChange, id, name}: SliderProps ) => {
   )
 }
 
-
-
 // the vertical gain components
 const Gain = ({ value, handleChange, id, name}: SliderProps ) => {
   return ( 
@@ -70,8 +68,6 @@ const Gain = ({ value, handleChange, id, name}: SliderProps ) => {
     </div>
   )
 }
-
-
 
 function TubePlayer({ id1, id2 } : TubePlayerProps) {
   const [sliderVals, setSliderVals] = useState<SliderVals>({

@@ -1,28 +1,15 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import useConfirm from "../components/alert.tsx";
-import { getPlaylist, deletePlaylist, updatePlaylist } from "../services/playlists.ts";
-import { youtube_parser, convertVid } from "../services/imgHandle.ts";
+import { getPlaylist, deletePlaylist } from "../services/playlists.ts";
+import { convertVid } from "../services/imgHandle.ts";
 import { Tube, Playlist as PListType } from "../lib/types.ts";
 import TubePlayer from "../components/tube-player.tsx";
 import AddTube from "../components/add-tube.tsx";
 import styles from "../ui/pListStyles.module.css"
 
-// type definitons
-type IdParams = {
-  id: number | undefined ;
-}
-
-// make an embed from any type of youtube link
-// const handleUtubeURL = (path) => {
-//   const link = youtube_parser(path);
-//   // console.log('whats this link look like', link);
-//   const embed = `https://www.youtube.com/embed/${link}`;
-//   return embed ? embed : null;
-// }
-
-function Playlist() {
-  const { id } = useParams<IdParams>();
+function Playlist({ refresh }) {
+  const { id } = useParams< 'id' >();
 
   // useConfirm
   const [Dialog, confirmDelete] = useConfirm(
@@ -47,7 +34,7 @@ function Playlist() {
   useEffect( () => {
     const fetchPlaylist = async () => {
       if(id) {
-        const data = await getPlaylist( id );
+        const data = await getPlaylist( parseInt( id ) );
         // set the pList
         setPlist( data );
       }
@@ -55,7 +42,7 @@ function Playlist() {
     } 
 
     fetchPlaylist();
-  }, [id, updatePlist])
+  }, [id, updatePlist, refresh])
   
   // function to handle when a tube is clicked
   function handleTubePlay( item: Tube, point: number) {
@@ -77,7 +64,7 @@ function Playlist() {
     const answer = await confirmDelete();
 
     if(answer) {
-      del( id );
+      del( parseInt( id ) );
       setUpdatePlist((prev) => !prev);
       setDialogState( false );
 
