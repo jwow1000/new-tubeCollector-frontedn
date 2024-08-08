@@ -9,7 +9,13 @@ const pListCred: Playlist = {
   user: 0,
 }
 
-function AddPlaylist( { setAddPlaylistState, setRefresh } ) {
+type AddPlaylistProps = {
+  setAddPlaylistState: boolean;
+  setRefresh: boolean;
+}
+
+function AddPlaylist( { setAddPlaylistState, setRefresh }: AddPlaylistProps ) {
+  
   // get global user data
   const { globalUser, setGlobalUser } = useStore();
 
@@ -17,13 +23,15 @@ function AddPlaylist( { setAddPlaylistState, setRefresh } ) {
   const [ data, setData ] = useState<Playlist>( pListCred );
  
   useEffect(()=>{
-    
-    setData((prev) => ({
-      ...prev,
-      user: globalUser.id,
-    }));
+    if(globalUser) {
+      setData((prev) => ({
+        ...prev,
+        user: globalUser.id,
+      }));
 
-  },[]);
+    }
+
+  },[ globalUser ]);
   
   // handle input changes
   function handleInputChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -44,7 +52,7 @@ function AddPlaylist( { setAddPlaylistState, setRefresh } ) {
     try {
       
       // post the new tube to the current playlist
-      console.log("this is waht the data looks like: ", data);
+      // console.log("this is waht the data looks like: ", data);
       const userData = await createPlaylist( data );
       // close the add-tube window
       setAddPlaylistState( false );

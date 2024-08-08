@@ -2,11 +2,11 @@
 import api from "./api-config.ts";
 import { UserCred, User } from "../lib/types.ts";
 
-// types
-interface VerifyUserResponse {
-  access: string;
-  user: User; // Replace `any` with the appropriate user type
-}
+// // types
+// interface VerifyUserResponse {
+//   access: string;
+//   user: User; // Replace `any` with the appropriate user type
+// }
 
 
 export const signUp = async (credentials: UserCred) => {
@@ -76,54 +76,4 @@ export const verifyUser = async (): Promise<User | boolean> => {
     return false;
   }
 };
-
-//get profile by user id
-export const getProfile = async (id) => {
-  try {
-    const response = await api.get(`/users/${id}/`);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-}
-
-// get all posts by user with profile id
-export const getUserPostsById = async (id) => {
-  try {
-    const response = await api.get(`profile/${id}/posts`);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-}
-
-//edit profile
-export const editProfile = async (id, data) => {
-  try {
-    const response = await api.patch(`/users/${id}/`, data);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-}
-
-// add like
-export const addLike = async (postID, profileID) => {
-  try {
-    const response = await api.patch(`posts/${postID}/add_like/${profileID}/`);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-}
-
-// remove like
-export const removeLike = async (postID, profileID) => {
-  try {
-    const response = await api.patch(`posts/${postID}/remove_like/${profileID}/`);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
-}
 
