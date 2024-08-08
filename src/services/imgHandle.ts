@@ -15,10 +15,14 @@ export const isUriImage = function(uri: string) {
 }
 
 // extract youtube id from all sorts of endpoints
-export const youtube_parser =  function (url: string){
+export const youtube_parser =  function (url: string | null){
   const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-  const match = url.match(regExp);
-  return (match&&match[7].length==11)? match[7] : false;
+  if(url) {
+    const match = url.match(regExp);
+    return (match&&match[7].length==11)? match[7] : null;
+  } else {
+    return null;
+  }
 }
 
 // convert a video embed link (youtube) into a preview image

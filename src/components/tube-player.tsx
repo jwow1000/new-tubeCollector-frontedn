@@ -74,8 +74,8 @@ function TubePlayer({ id1, id2 } : TubePlayerProps) {
     xfade: 50,
     curve: 0
   }); 
-  const [tubeID1, setTubeID1] = useState<string>("");
-  const [tubeID2, setTubeID2] = useState<string>("");
+  const [tubeID1, setTubeID1] = useState<string | boolean>("");
+  const [tubeID2, setTubeID2] = useState<string | boolean>("");
   const [gainAmt, setGainAmt] = useState<GainAmt>({
     gain1: 100,
     gain2: 100
@@ -120,7 +120,7 @@ function TubePlayer({ id1, id2 } : TubePlayerProps) {
         { 
           id1 &&
           <Youtube 
-            tubeId={youtube_parser(id1)}
+            tubeId={ youtube_parser(id1) }
             vol={ 
               volCurve(gainAmt.gain1) * 
               xfadeConvert( 
@@ -129,20 +129,21 @@ function TubePlayer({ id1, id2 } : TubePlayerProps) {
               ) 
             } 
             className={styles.tube1}
+            // setPlayState={ setPlayState }
           />
         }
       </div>
       <Gain 
         id={styles.gain1}
         name="gain1"
-        value={gainAmt.gain1}
+        value={gainAmt.gain1 || ""}
         handleChange={ handleGainChange } 
       />
       <div id={styles.tube2Container}>
         {
           id2 &&
           <Youtube 
-            tubeId={youtube_parser(id2)} 
+            tubeId={ youtube_parser(id2) } 
             vol={ 
               volCurve(gainAmt.gain2) * 
               xfadeConvert( 
