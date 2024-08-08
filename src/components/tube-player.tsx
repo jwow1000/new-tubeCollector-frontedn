@@ -80,6 +80,8 @@ function TubePlayer({ id1, id2 } : TubePlayerProps) {
     gain1: 100,
     gain2: 100
   });
+  const [ playState1, setPlayState1 ] = useState<number>(0);
+  const [ playState2, setPlayState2 ] = useState<number>(0);
 
   // change handlers
   const handleSliderChange = ( event: React.ChangeEvent<HTMLInputElement> ) => {
@@ -129,7 +131,7 @@ function TubePlayer({ id1, id2 } : TubePlayerProps) {
               ) 
             } 
             className={styles.tube1}
-            // setPlayState={ setPlayState }
+            setPlayState={ setPlayState1 }
           />
         }
       </div>
@@ -151,7 +153,9 @@ function TubePlayer({ id1, id2 } : TubePlayerProps) {
                 sliderVals.curve/100
               ) 
             } 
-            className={styles.tube2} />
+            className={styles.tube2} 
+            setPlayState={ setPlayState2 }
+          />
         }
       </div>
       <Gain 

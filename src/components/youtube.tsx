@@ -43,10 +43,16 @@ function VideoPlayer({ tubeId, vol, className, setPlayState}: VideoPlayerProps) 
   const onStateChange: YouTubeProps['onStateChange'] = () => {
     // access to player in all event handlers via event.target
     // console.log( "state changes: ", event.target );
+    const fetchState = async () => {
+      const data = await player?.getPlayerState();
+      return data;
+    }
+    
+    
     if(player) {
       player.setVolume( vol );
-      const playState = player.getPlayerState() as number;
-      setPlayState( playState );
+      // const playState = player.getPlayerState();
+      setPlayState( fetchState() );
     }
     
   }
