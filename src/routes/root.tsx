@@ -19,7 +19,7 @@ function Root() {
   // useStates
   const [addPlaylistState, setAddPlaylistState] = useState(false);
   const [plists, setPlists] = useState<Playlist[]>([]);
-  const [refresh, setRefresh] = useState(false);
+  const [refresh, setRefresh] = useState< boolean >(false);
   
   useEffect(() => {
     // fetch the user function
